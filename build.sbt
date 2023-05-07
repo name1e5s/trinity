@@ -1,8 +1,8 @@
 // See README.md for license details.
 
-ThisBuild / scalaVersion     := "2.13.8"
-ThisBuild / version          := "0.1.0"
-ThisBuild / organization     := "name1e5s"
+ThisBuild / scalaVersion := "2.13.8"
+ThisBuild / version := "0.1.0"
+ThisBuild / organization := "name1e5s"
 
 val chiselVersion = "3.6.0"
 
@@ -18,8 +18,9 @@ lazy val root = (project in file("."))
       "-deprecation",
       "-feature",
       "-Xcheckinit",
-      "-P:chiselplugin:genBundleElements",
+      "-P:chiselplugin:genBundleElements"
     ),
-    addCompilerPlugin("edu.berkeley.cs" % "chisel3-plugin" % chiselVersion cross CrossVersion.full),
+    addCompilerPlugin(
+      "edu.berkeley.cs" % "chisel3-plugin" % chiselVersion cross CrossVersion.full
+    )
   )
-
