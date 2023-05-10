@@ -4,6 +4,10 @@ import chisel3._
 import chisel3.util._
 import chisel3.experimental.AffectsChiselPrefix
 
+object Converters {
+  implicit def uIntToBitPat(x: UInt) = BitPat(x)
+}
+
 object SignExtension {
   def apply[T <: Bits](data: T, width: Int = 64) = {
     val result = Wire(SInt(width.W))

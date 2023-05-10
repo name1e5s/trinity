@@ -15,10 +15,10 @@ lazy val root = (project in file("."))
     ),
     scalacOptions ++= Seq(
       "-language:reflectiveCalls",
+      "-language:implicitConversions",
       "-deprecation",
       "-feature",
-      "-Xcheckinit",
-      "-P:chiselplugin:genBundleElements"
+      "-Xcheckinit"
     ),
     addCompilerPlugin(
       "edu.berkeley.cs" % "chisel3-plugin" % chiselVersion cross CrossVersion.full

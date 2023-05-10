@@ -6,6 +6,7 @@ import chisel3.util._
 import trinity.util._
 import chiseltest._
 import org.scalatest.freespec.AnyFreeSpec
+import trinity.core.execute.{AluOp, BruOp}
 
 class ExampleModule extends TrinityModule {
   val io = IO(new Bundle {
@@ -24,6 +25,10 @@ class ExampleTest extends AnyFreeSpec with ChiselScalatestTester {
         dut.io.timer.expect(i)
         dut.clock.step(1)
       }
+      assert(AluOp.OR.isLit)
+      assert(BruOp.J.isLit)
+      val c = BitPat(BruOp.NE)
+      println(c)
     }
   }
 }
