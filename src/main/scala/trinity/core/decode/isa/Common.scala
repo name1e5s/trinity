@@ -3,7 +3,7 @@ package trinity.core.decode.isa
 import chisel3._
 import chisel3.util._
 import trinity.util.Converters._
-import trinity.core.FuncType
+import trinity.core.FnType
 import trinity.core.execute.AluOp
 
 object InstType {
@@ -31,10 +31,9 @@ object InstructionConstants {
   def N = BitPat("b0")
 
   def illegal: List[BitPat] =
-    List(InstType.X, FuncType.ALU, AluOp.ADD, SrcType.REG, SrcType.REG, Y)
+    List(InstType.X, FnType.ALU, AluOp.ADD, SrcType.REG, SrcType.REG, N)
 }
 
 abstract class InstructionTable {
-  def N = BitPat("b0")
-  def Y = BitPat("b1")
+  import InstructionConstants.{Y, N, illegal}
 }

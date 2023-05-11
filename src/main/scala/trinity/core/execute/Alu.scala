@@ -3,30 +3,31 @@ package trinity.core.execute
 import chisel3._
 import chisel3.util._
 import trinity.core.Constants._
-import trinity.core.FuncOp
+import trinity.core.FnOp
+import trinity.core.FuncOpConversions._
 import trinity.util._
 
 object AluOp {
-  def ADD = 0.U
-  def SUB = 1.U
-  def SLT = 2.U
-  def SLTU = 3.U
-  def AND = 4.U
-  def OR = 5.U
-  def XOR = 6.U
-  def SLL = 7.U
-  def SRL = 8.U
-  def SRA = 9.U
-  def LUI = 10.U
-  def AUIPC = 11.U
+  def ADD = 0.Op
+  def SUB = 1.Op
+  def SLT = 2.Op
+  def SLTU = 3.Op
+  def AND = 4.Op
+  def OR = 5.Op
+  def XOR = 6.Op
+  def SLL = 7.Op
+  def SRL = 8.Op
+  def SRA = 9.Op
+  def LUI = 10.Op
+  def AUIPC = 11.Op
 
-  def ADDW = 12.U
-  def SUBW = 13.U
-  def SLLW = 14.U
-  def SRLW = 15.U
-  def SRAW = 16.U
+  def ADDW = 12.Op
+  def SUBW = 13.Op
+  def SLLW = 14.Op
+  def SRLW = 15.Op
+  def SRAW = 16.Op
 
-  def apply() = FuncOp()
+  def apply() = FnOp()
 }
 
 class AluIO extends Bundle {

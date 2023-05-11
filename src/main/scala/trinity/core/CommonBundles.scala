@@ -12,7 +12,7 @@ class InstructionBundle extends Bundle {
   val instruction = UInt(instructionWidth.W)
 }
 
-object FuncType {
+object FnType {
   def ALU = 0.U
   def MDU = 1.U
   def LSU = 2.U
@@ -20,8 +20,21 @@ object FuncType {
   def apply() = UInt(2.W)
 }
 
-object FuncOp {
-  def apply() = UInt(6.W)
+object FnOp {
+  def opWidth = 6
+
+  def apply() = UInt(opWidth.W)
+}
+
+object FuncOpConversions {
+
+  implicit class fromBigIntToFuncOp(value: BigInt) {
+    def Op: UInt = value.U(FnOp.opWidth.W) // scalastyle:ignore method.name
+  }
+
+  implicit class fromIntToFuncOp(int: Int) extends fromBigIntToFuncOp(int)
+
+  implicit class fromLongToFuncOp(long: Long) extends fromBigIntToFuncOp(long)
 }
 
 class RegisterInfo extends Bundle {
@@ -32,8 +45,8 @@ class RegisterInfo extends Bundle {
 class ControlFlowBundle extends Bundle {
   val instruction = new InstructionBundle
 
-  val funcType = FuncType()
-  val funcOp = FuncOp()
+  val fnType = FnType()
+  val fnOp = FnOp()
 
   val rs1 = new RegisterInfo
   val rs2 = new RegisterInfo

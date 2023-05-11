@@ -1,23 +1,24 @@
 package trinity.core.execute
 
 import chisel3._
-import trinity.core.FuncOp
+import trinity.core.FnOp
+import trinity.core.FuncOpConversions._
 
 object LsuOp {
-  def LB = 0.U
-  def LH = 1.U
-  def LW = 2.U
-  def LD = 3.U
-  def LBU = 4.U
-  def LHU = 5.U
-  def LWU = 6.U
+  def LB = 0.Op
+  def LH = 1.Op
+  def LW = 2.Op
+  def LD = 3.Op
+  def LBU = 4.Op
+  def LHU = 5.Op
+  def LWU = 6.Op
 
-  def SB = 8.U
-  def SH = 9.U
-  def SW = 10.U
-  def SD = 11.U
+  def SB = 8.Op
+  def SH = 9.Op
+  def SW = 10.Op
+  def SD = 11.Op
 
-  def apply() = FuncOp()
+  def apply() = FnOp()
 }
 
 class Lsu {}

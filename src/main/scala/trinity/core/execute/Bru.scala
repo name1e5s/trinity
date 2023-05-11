@@ -3,20 +3,21 @@ package trinity.core.execute
 import chisel3._
 import chisel3.util._
 import trinity.core.Constants._
+import trinity.core.FuncOpConversions._
 import trinity.core._
 import trinity.util.TrinityModule
 
 object BruOp {
-  def J = 0.U
-  def JR = 1.U
-  def EQ = 2.U
-  def NE = 3.U
-  def LT = 4.U
-  def GE = 5.U
-  def LTU = 6.U
-  def GEU = 7.U
+  def J = 0.Op
+  def JR = 1.Op
+  def EQ = 2.Op
+  def NE = 3.Op
+  def LT = 4.Op
+  def GE = 5.Op
+  def LTU = 6.Op
+  def GEU = 7.Op
 
-  def apply() = FuncOp()
+  def apply() = FnOp()
 }
 
 class BruIO extends Bundle {
