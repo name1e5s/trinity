@@ -19,7 +19,6 @@ object AluOp {
   def SRL = 8.Op
   def SRA = 9.Op
   def LUI = 10.Op
-  def AUIPC = 11.Op
 
   def ADDW = 12.Op
   def SUBW = 13.Op
@@ -32,7 +31,6 @@ object AluOp {
 
 class AluIO extends Bundle {
   val op = Input(AluOp())
-  val pc = Input(UInt(xLen.W))
   val src1 = Input(UInt(xLen.W))
   val src2 = Input(UInt(xLen.W))
   val result = Output(UInt(xLen.W))
@@ -60,7 +58,6 @@ class Alu extends TrinityModule {
     op(AluOp.SRL) -> (src1 >> src2(5, 0))(xLen - 1, 0).asUInt,
     op(AluOp.SRA) -> (src1.asSInt >> src2(5, 0))(xLen - 1, 0).asUInt,
     op(AluOp.LUI) -> src2,
-    op(AluOp.AUIPC) -> (io.pc + src2),
     op(AluOp.ADDW) -> SignExtension(src1W + src2W),
     op(AluOp.SUBW) -> SignExtension(src1W - src2W),
     op(AluOp.SLLW) -> SignExtension((src1W << src2(4, 0))(wLen - 1, 0)),
@@ -72,7 +69,6 @@ class Alu extends TrinityModule {
   log(
     "op: %d pc: %x src: %x %x result: %x",
     io.op,
-    io.pc,
     src1,
     src2,
     Mux1H(resultTable)

@@ -7,33 +7,36 @@ import trinity.core.FnType
 import trinity.core.execute.AluOp
 
 object InstType {
-  def X = 0.U
-  def R = 1.U
-  def I = 2.U
-  def S = 3.U
-  def B = 4.U
-  def U = 5.U
-  def J = 6.U
+  def width = 4
 
-  def apply() = UInt(4.W)
+  def X = 0.U(width.W)
+  def R = 1.U(width.W)
+  def I = 2.U(width.W)
+  def S = 3.U(width.W)
+  def B = 4.U(width.W)
+  def U = 5.U(width.W)
+  def J = 6.U(width.W)
+
+  def apply() = UInt(width.W)
+
+  def writeGpr(value: UInt) = value =/= S || value =/= B
 }
 
 object SrcType {
-  def REG = 0.U
-  def IMM = 1.U
-  def PC = 2.U
+  def width = 2
 
-  def apply() = UInt(2.W)
+  def REG = 0.U(width.W)
+  def IMM = 1.U(width.W)
+  def PC = 2.U(width.W)
+
+  def apply() = UInt(width.W)
 }
 
 object InstructionConstants {
-  def Y = BitPat("b1")
-  def N = BitPat("b0")
-
   def illegal: List[BitPat] =
     List(InstType.X, FnType.ALU, AluOp.ADD, SrcType.REG, SrcType.REG, N)
 }
 
 abstract class InstructionTable {
-  import InstructionConstants.{Y, N, illegal}
+  val table: List[(BitPat, List[BitPat])]
 }

@@ -13,11 +13,14 @@ class InstructionBundle extends Bundle {
 }
 
 object FnType {
-  def ALU = 0.U
-  def MDU = 1.U
-  def LSU = 2.U
+  def width = 2
 
-  def apply() = UInt(2.W)
+  def ALU = 0.U(width.W)
+  def BRU = 1.U(width.W)
+  def MDU = 2.U(width.W)
+  def LSU = 3.U(width.W)
+
+  def apply() = UInt(width.W)
 }
 
 object FnOp {
