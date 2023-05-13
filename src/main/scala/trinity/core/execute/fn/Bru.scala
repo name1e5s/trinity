@@ -1,10 +1,9 @@
-package trinity.core.execute
+package trinity.core.execute.fn
 
 import chisel3._
 import chisel3.util._
 import trinity.core.Constants._
-import trinity.core.FuncOpConversions._
-import trinity.core._
+import trinity.core.execute.fn.FuncOpConversions._
 import trinity.util.TrinityModule
 
 object BruOp {
@@ -22,27 +21,25 @@ object BruOp {
 
 class BruIO extends Bundle {
   val isBranch = Input(Bool())
-  val op = Input(BruOp())
   val pc = Input(UInt(xLen.W))
-  val src1 = Input(UInt(xLen.W))
-  val src2 = Input(UInt(xLen.W))
-  val result = Output(UInt(xLen.W))
 
   val offset = Input(UInt(xLen.W))
   val nextPc = Input(UInt(xLen.W))
   val redirect = Valid(UInt(xLen.W))
 }
 
-class Bru extends TrinityModule {
-  val io = IO(new BruIO)
+class Bru extends FnModule {
+  override def id: UInt = FnType.BRU
+
+  val extra = IO(new BruIO)
 
   val op = UIntToOH(io.op)
   val src1 = io.src1
   val src2 = io.src2
 
-  val sequencePc = io.pc + 4.U
-  val branchPc = io.pc + io.offset
-  val jrPc = io.src1 + io.offset
+  val sequencePc = extra.pc + 4.U
+  val branchPc = extra.pc + extra.offset
+  val jrPc = io.src1 + extra.offset
   val jumpPc = Mux(op(BruOp.JR), jrPc, branchPc)
 
   val eq = src1 === src2
@@ -62,17 +59,17 @@ class Bru extends TrinityModule {
     op(BruOp.LTU) -> ltu,
     op(BruOp.GEU) -> geu
   )
-  val shouldJump = Mux1H(jumpTable) && io.isBranch
+  val shouldJump = Mux1H(jumpTable) && extra.isBranch
 
   io.result := sequencePc
 
   val realNextPc = Mux(shouldJump, jumpPc, sequencePc)
-  io.redirect.bits := realNextPc
-  io.redirect.valid := realNextPc =/= io.nextPc
+  extra.redirect.bits := realNextPc
+  extra.redirect.valid := realNextPc =/= extra.nextPc
 
   log(
     "pc: %x, op: %d, src: %x %x, jump: %d",
-    io.pc,
+    extra.pc,
     io.op,
     src1,
     src2,

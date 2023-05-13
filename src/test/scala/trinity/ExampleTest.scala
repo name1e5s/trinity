@@ -6,7 +6,15 @@ import chisel3.util._
 import trinity.util._
 import chiseltest._
 import org.scalatest.freespec.AnyFreeSpec
-import trinity.core.execute.{AluOp, BruOp}
+import trinity.core.decode.Decoder
+import trinity.core.execute.Executor
+import trinity.core.{
+  ControlFlowBundle,
+  RegisterBypassPort,
+  RegisterFile,
+  RegisterFileIO
+}
+import trinity.core.execute.fn.{Agu, Alu, AluOp, Bru, BruOp}
 
 class ExampleModule extends TrinityModule {
   val io = IO(new Bundle {
@@ -33,11 +41,33 @@ class ExampleTest extends AnyFreeSpec with ChiselScalatestTester {
   }
 }
 
+class ExampleModule2 extends Module {
+  val io = IO(new RegisterFileIO(2))
+
+  val in1 = Wire(new RegisterBypassPort)
+  in1.valid := true.B
+  in1.addr := 4.U
+  in1.data := 4.U
+
+  val in2 = Wire(new RegisterBypassPort)
+  in2 := in1
+  val reg = Module(new RegisterFile(2))
+
+  reg.io.bypass.zip(List(in1, in2)).foreach { p =>
+    p._1 := p._2
+  }
+  reg.io <> io
+}
+
 object ViewVerilog {
   def main(args: Array[String]): Unit = {
     (new chisel3.stage.ChiselStage).execute(
       Array("-X", "verilog"),
-      Seq(ChiselGeneratorAnnotation(() => new ExampleModule))
+      Seq(
+        ChiselGeneratorAnnotation(() =>
+          new PipelineStage(new ControlFlowBundle)
+        )
+      )
     )
   }
 }

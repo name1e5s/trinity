@@ -1,8 +1,7 @@
 package trinity.core.decode.isa
 
 import chisel3.util._
-import trinity.core.FnType
-import trinity.core.execute.{AluOp, BruOp, LsuOp}
+import trinity.core.execute.fn.{AluOp, BruOp, LsuOp, FnType}
 import trinity.util.Converters._
 
 class Rv64ITable extends InstructionTable {

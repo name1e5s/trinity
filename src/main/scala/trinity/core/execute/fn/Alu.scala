@@ -1,10 +1,9 @@
-package trinity.core.execute
+package trinity.core.execute.fn
 
 import chisel3._
 import chisel3.util._
 import trinity.core.Constants._
-import trinity.core.FnOp
-import trinity.core.FuncOpConversions._
+import trinity.core.execute.fn.FuncOpConversions._
 import trinity.util._
 
 object AluOp {
@@ -29,15 +28,8 @@ object AluOp {
   def apply() = FnOp()
 }
 
-class AluIO extends Bundle {
-  val op = Input(AluOp())
-  val src1 = Input(UInt(xLen.W))
-  val src2 = Input(UInt(xLen.W))
-  val result = Output(UInt(xLen.W))
-}
-
-class Alu extends TrinityModule {
-  val io = IO(new AluIO)
+class Alu extends FnModule {
+  override def id: UInt = FnType.ALU
 
   val op = UIntToOH(io.op)
   val src1 = io.src1
@@ -65,12 +57,13 @@ class Alu extends TrinityModule {
     op(AluOp.SRAW) -> SignExtension((src1W.asSInt >> src2(4, 0))(wLen - 1, 0))
   )
 
-  io.result := Mux1H(resultTable)
+  val result = Mux1H(resultTable)
+  io.result := result
   log(
-    "op: %d pc: %x src: %x %x result: %x",
+    "op: %d src: %x %x result: %x",
     io.op,
     src1,
     src2,
-    Mux1H(resultTable)
+    result
   )
 }
