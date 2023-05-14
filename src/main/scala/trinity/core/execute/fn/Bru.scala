@@ -61,7 +61,8 @@ class Bru extends FnModule {
   )
   val shouldJump = Mux1H(jumpTable) && extra.isBranch
 
-  io.result := sequencePc
+  io.result.bits := sequencePc
+  io.result.valid := true.B
 
   val realNextPc = Mux(shouldJump, jumpPc, sequencePc)
   extra.redirect.bits := realNextPc

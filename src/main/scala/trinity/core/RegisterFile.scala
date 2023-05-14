@@ -1,7 +1,6 @@
 package trinity.core
 
 import chisel3._
-import chisel3.experimental.SourceInfo
 import chisel3.util._
 import trinity.util._
 import trinity.core.Constants._

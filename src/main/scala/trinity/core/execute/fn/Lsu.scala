@@ -45,9 +45,8 @@ class Agu extends FnModule {
 
   val extra = IO(new AguIO)
 
-  io.result := 0.U
+  io.result.bits := 0.U
+  io.result.valid := false.B
   extra.info.addr := io.src1 + extra.immediate
   extra.info.data := io.src2
 }
-
-class Lsu {}

@@ -67,9 +67,10 @@ class Fetcher extends TrinityModule {
   io.cache.req.bits.size := CacheBusSize.W
   io.cache.req.bits.wdata := 0.U
   io.cache.req.bits.wmask := 0.U
-  io.cache.req.bits.extra.pc := pc
-  io.cache.req.bits.extra.nextPc := nextPc
-  io.cache.req.bits.extra.epoch := epoch
+  val extra = io.cache.req.bits.extra
+  extra.pc := pc
+  extra.nextPc := nextPc
+  extra.epoch := epoch
 
   io.cache.resp.ready := io.instruction.ready || redirection.valid
   io.instruction.bits := DontCare

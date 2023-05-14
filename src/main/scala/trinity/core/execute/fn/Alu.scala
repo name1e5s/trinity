@@ -58,7 +58,8 @@ class Alu extends FnModule {
   )
 
   val result = Mux1H(resultTable)
-  io.result := result
+  io.result.bits := result
+  io.result.valid := true.B
   log(
     "op: %d src: %x %x result: %x",
     io.op,

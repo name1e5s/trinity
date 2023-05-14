@@ -38,11 +38,11 @@ package object fn {
   }
 
   class FnIO extends Bundle {
-    val id = Output(UInt())
+    val id = Output(FnType())
     val op = Input(FnOp())
     val src1 = Input(UInt(xLen.W))
     val src2 = Input(UInt(xLen.W))
-    val result = Output(UInt(xLen.W))
+    val result = Valid(UInt(xLen.W))
   }
 
   abstract class FnModule extends TrinityModule {
