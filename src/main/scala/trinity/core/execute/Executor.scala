@@ -58,7 +58,7 @@ class Executor extends TrinityModule {
   out.rd.data := result.bits
   out.addressInfo := agu.extra.info
   io.redirect := bru.extra.redirect
-  io.bypass.addr := in.rd.index
+  io.bypass.addr := in.rd.addr
   io.bypass.data := result.bits
   io.bypass.valid := result.valid && InstType.writeGpr(in.microOp.fnType)
 }

@@ -26,9 +26,9 @@ class Decoder extends TrinityModule {
 
   val commonInfo =
     IsaCommonDecoder(io.in.bits.instruction.instruction, microOp.instType)
-  out.rs1.index := commonInfo.rs1
-  out.rs2.index := commonInfo.rs2
-  out.rd.index := commonInfo.rd
+  out.rs1.addr := commonInfo.rs1
+  out.rs2.addr := commonInfo.rs2
+  out.rd.addr := commonInfo.rd
 
   read(0).addr := commonInfo.rs1
   read(1).addr := commonInfo.rs2

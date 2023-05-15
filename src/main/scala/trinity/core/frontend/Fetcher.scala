@@ -10,6 +10,9 @@ class ICacheExtra extends Bundle {
   val pc = UInt(xLen.W)
   val nextPc = UInt(xLen.W)
   val epoch = UInt(1.W) // 1 bit is enough for now
+
+  override def toPrintable: Printable =
+    p"pc: ${Hexadecimal(pc)}, next: ${Hexadecimal(nextPc)}, epoch: $epoch"
 }
 
 class FetcherIO extends Bundle {

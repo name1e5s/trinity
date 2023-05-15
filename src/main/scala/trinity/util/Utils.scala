@@ -16,6 +16,14 @@ object SignExtension {
   }
 }
 
+object ZeroExtension {
+  def apply[T <: Bits](data: T, width: Int = 64) = {
+    val result = Wire(UInt(width.W))
+    result := data.asUInt
+    result
+  }
+}
+
 class SimpleCounter(range: Int) extends AffectsChiselPrefix {
   assert(isPow2(range), "range must be a pow of 2")
 

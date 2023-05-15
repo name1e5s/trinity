@@ -13,7 +13,7 @@ class InstructionBundle extends Bundle {
 }
 
 class RegisterInfo extends Bundle {
-  val index = UInt(gprAddressWidth.W)
+  val addr = UInt(gprAddressWidth.W)
   val data = UInt(xLen.W)
 }
 
@@ -27,4 +27,6 @@ class ControlFlowBundle extends Bundle {
   val immediate = UInt(xLen.W)
 
   val addressInfo = new AddressInfo
+
+  override def toPrintable: Printable = p"<ControlFlowBundle>"
 }

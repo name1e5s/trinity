@@ -1,6 +1,7 @@
 package trinity.core.execute.fn
 
 import chisel3._
+import trinity.core.CacheBusRw
 import trinity.core.Constants._
 import trinity.core.execute.fn.FuncOpConversions._
 
@@ -28,6 +29,9 @@ object LsuOp {
   def SD = 11.Op
 
   def apply() = FnOp()
+
+  def rw(op: UInt) = Mux(op(3), CacheBusRw.W, CacheBusRw.R)
+  def size(op: UInt) = op(1, 0)
 }
 
 class AddressInfo extends Bundle {
