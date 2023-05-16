@@ -10,6 +10,7 @@ import trinity.core.decode.Decoder
 import trinity.core.execute.Executor
 import trinity.core.{
   ControlFlowBundle,
+  Core,
   RegisterBypassPort,
   RegisterFile,
   RegisterFileIO
@@ -67,7 +68,7 @@ object ViewVerilog {
     (new chisel3.stage.ChiselStage).execute(
       Array("-X", "verilog"),
       Seq(
-        ChiselGeneratorAnnotation(() => new MemoryOperator)
+        ChiselGeneratorAnnotation(() => new Core)
       )
     )
   }

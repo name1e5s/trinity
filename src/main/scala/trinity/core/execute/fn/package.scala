@@ -18,6 +18,8 @@ package object fn {
     def LSU = 3.U(width.W)
 
     def apply() = UInt(width.W)
+    def isMfn(fnType: UInt) =
+      Seq(FnType.LSU, FnType.MDU).map(_ === fnType).reduce(_ || _)
   }
 
   object FnOp {

@@ -2,7 +2,13 @@ package trinity.core.frontend
 
 import chisel3._
 import chisel3.util._
-import trinity.core.{CacheBus, CacheBusRw, CacheBusSize, InstructionBundle}
+import trinity.core.{
+  CacheBus,
+  CacheBusRw,
+  CacheBusSize,
+  ControlFlowBundle,
+  InstructionBundle
+}
 import trinity.util._
 import trinity.core.Constants._
 
@@ -17,7 +23,7 @@ class ICacheExtra extends Bundle {
 
 class FetcherIO extends Bundle {
   val cache = CacheBus(new ICacheExtra)
-  val instruction = Decoupled(new InstructionBundle)
+  val instruction = Decoupled(new ControlFlowBundle)
 
   val mispredictRedirection = Flipped(Valid(UInt(xLen.W)))
   val exceptionRedirection = Flipped(Valid(UInt(xLen.W)))
@@ -77,9 +83,11 @@ class Fetcher extends TrinityModule {
 
   io.cache.resp.ready := io.instruction.ready || redirection.valid
   io.instruction.bits := DontCare
-  io.instruction.bits.instruction := io.cache.resp.bits.rdata
-  io.instruction.bits.pc := io.cache.resp.bits.extra.pc
-  io.instruction.bits.predictedNextPc := io.cache.resp.bits.extra.nextPc
+
+  val instructionBundle = io.instruction.bits.instruction
+  instructionBundle.instruction := io.cache.resp.bits.rdata
+  instructionBundle.pc := io.cache.resp.bits.extra.pc
+  instructionBundle.predictedNextPc := io.cache.resp.bits.extra.nextPc
 
   io.instruction.valid := io.cache.resp.valid && !redirection.valid && epoch === io.cache.resp.bits.extra.epoch
 }

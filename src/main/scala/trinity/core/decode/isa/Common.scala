@@ -42,6 +42,10 @@ object SrcType {
     val src1 :: src2 :: Nil = DecodeLogic(instType, default, table)
     (src1, src2)
   }
+  def usesRs2(instType: UInt) = {
+    val p = apply(instType)
+    p._2 === REG
+  }
 }
 
 abstract class InstructionTable {

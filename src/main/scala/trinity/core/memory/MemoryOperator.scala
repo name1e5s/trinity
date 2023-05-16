@@ -11,6 +11,7 @@ class MemoryOperatorIO extends PipelineStageIO(new ControlFlowBundle)
 
 class MemoryOperatorExtraIO extends Bundle {
   val lsuIO = new LsuIO
+  val allReady = Output(Bool())
 }
 
 class MemoryOperator extends TrinityModule {
@@ -26,6 +27,8 @@ class MemoryOperator extends TrinityModule {
   extra.lsuIO <> lsu.extra
 
   val allReady = mfu.map(_.io.in.ready).reduce(_ && _)
+  extra.allReady := allReady
+
   val opUseMfu = mfu
     .map(p => (io.in.bits.microOp.fnType === p.io.id) && p.io.id =/= FnType.ALU)
     .reduce(_ || _)

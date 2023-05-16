@@ -42,13 +42,12 @@ object CacheBusReq {
 }
 
 class CacheBusResp[T <: Bundle](gen: => T) extends Bundle {
-  val rw = Output(CacheBusRw())
   val rdata = Output(UInt(dataWidth.W))
 
   val extra = Output(gen)
 
   override def toPrintable: Printable = {
-    p"rw = $rw, rdata = 0x${Hexadecimal(rdata)}, " +
+    p"rdata = 0x${Hexadecimal(rdata)}, " +
       p"extra = $extra"
   }
 }

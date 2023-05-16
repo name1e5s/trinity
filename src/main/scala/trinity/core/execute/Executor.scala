@@ -60,5 +60,7 @@ class Executor extends TrinityModule {
   io.redirect := bru.extra.redirect
   io.bypass.addr := in.rd.addr
   io.bypass.data := result.bits
-  io.bypass.valid := result.valid && InstType.writeGpr(in.microOp.fnType)
+  io.bypass.valid := io.in.valid && result.valid && InstType.writeGpr(
+    in.microOp.fnType
+  )
 }
