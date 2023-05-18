@@ -2,7 +2,7 @@ package trinity.core.execute.fn
 
 import chisel3._
 import chisel3.util._
-import trinity.core.Constants._
+import trinity.Constants._
 import trinity.core.execute.fn.FuncOpConversions._
 import trinity.util.TrinityModule
 

@@ -1,7 +1,7 @@
 package trinity.core
 
 import chisel3._
-import trinity.core.Constants._
+import trinity.Constants._
 import trinity.core.decode.isa.MicroOp
 import trinity.core.execute.fn.AddressInfo
 

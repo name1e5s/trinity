@@ -5,7 +5,7 @@ import chisel3.util._
 import trinity.bus.cachebus.{CacheBus, CacheBusSize}
 import trinity.core._
 import trinity.core.execute.fn._
-import trinity.core.Constants._
+import trinity.Constants._
 import trinity.util.{SignExtension, ZeroExtension}
 
 class LsuIO extends Bundle {

@@ -2,7 +2,7 @@ package trinity.bus
 
 import chisel3._
 import chisel3.util._
-import trinity.core.Constants._
+import trinity.Constants._
 
 package object cachebus {
   object CacheBusRw {

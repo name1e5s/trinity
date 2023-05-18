@@ -3,7 +3,7 @@ package trinity.core.frontend
 import chisel3._
 import chisel3.util._
 import trinity.bus.cachebus.{CacheBus, CacheBusRw, CacheBusSize}
-import trinity.core.Constants._
+import trinity.Constants._
 import trinity.core.{ControlFlowBundle, InstructionBundle}
 import trinity.util._
 

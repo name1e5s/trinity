@@ -2,7 +2,7 @@ package trinity.core.memory
 
 import chisel3._
 import chisel3.util._
-import trinity.core.Constants._
+import trinity.Constants._
 import trinity.core.ControlFlowBundle
 import trinity.core.execute.fn._
 import trinity.util.TrinityModule

@@ -4,7 +4,7 @@ import chisel3._
 
 import trinity.bus.cachebus.CacheBusRw
 
-import trinity.core.Constants._
+import trinity.Constants._
 import trinity.core.execute.fn.FuncOpConversions._
 
 object LsuOp {

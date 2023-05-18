@@ -2,7 +2,7 @@ package trinity.core.execute
 
 import chisel3._
 import chisel3.util._
-import trinity.core.Constants._
+import trinity.Constants._
 import trinity.util.TrinityModule
 
 package object fn {

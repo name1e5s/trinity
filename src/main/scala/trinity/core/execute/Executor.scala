@@ -3,7 +3,7 @@ package trinity.core.execute
 import chisel3._
 import chisel3.util._
 import trinity.core._
-import trinity.core.Constants._
+import trinity.Constants._
 import trinity.core.decode.isa.{InstType, SrcType}
 import trinity.core.execute.fn._
 import trinity.util.TrinityModule

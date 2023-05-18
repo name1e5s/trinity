@@ -2,7 +2,7 @@ package trinity.core.decode.isa
 
 import chisel3._
 import chisel3.util._
-import trinity.core.Constants._
+import trinity.Constants._
 import trinity.core.execute.fn.AluOp
 import trinity.core.execute.fn.{FnOp, FnType}
 import trinity.util.{DecodeLogic, SignExtension}

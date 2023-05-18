@@ -3,7 +3,7 @@ package trinity.core
 import chisel3._
 import chisel3.util._
 import trinity.util._
-import trinity.core.Constants._
+import trinity.Constants._
 
 class RegisterFileReadPort extends Bundle {
   val addr = Input(UInt(gprAddressWidth.W))
