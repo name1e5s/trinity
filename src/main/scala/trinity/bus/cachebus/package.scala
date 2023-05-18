@@ -39,6 +39,10 @@ package object cachebus {
     }
   }
 
+  object CacheBusReqBase {
+    def apply() = new CacheBusReqBase
+  }
+
   class CacheBusReq[T <: Bundle](gen: => T) extends Bundle {
     val base = Output(new CacheBusReqBase)
     val extra = Output(gen)
@@ -56,6 +60,10 @@ package object cachebus {
     }
   }
 
+  object CacheBusRespBase {
+    def apply() = new CacheBusRespBase
+  }
+
   class CacheBusResp[T <: Bundle](gen: => T) extends Bundle {
     val base = new CacheBusRespBase
     val extra = Output(gen)
@@ -63,6 +71,19 @@ package object cachebus {
 
   object CacheBusResp {
     def apply[T <: Bundle](gen: => T) = new CacheBusResp(gen)
+  }
+
+  class CacheBusBase extends Bundle {
+    val req = Decoupled(CacheBusReqBase())
+    val resp = Flipped(Decoupled(CacheBusRespBase()))
+
+    def isWrite = req.valid && req.bits.rw === CacheBusRw.W
+
+    def isRead = req.valid && req.bits.rw === CacheBusRw.R
+  }
+
+  object CacheBusBase {
+    def apply() = new CacheBusBase
   }
 
   class CacheBus[T <: Bundle](gen: => T) extends Bundle {

@@ -6,6 +6,7 @@ import chisel3.util._
 import trinity.util._
 import chiseltest._
 import org.scalatest.freespec.AnyFreeSpec
+import trinity.bus.cachebus.CacheBusToBase
 import trinity.core.decode.Decoder
 import trinity.core.execute.Executor
 import trinity.core.{

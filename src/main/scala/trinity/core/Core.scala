@@ -2,20 +2,18 @@ package trinity.core
 
 import chisel3._
 import chisel3.util._
-import trinity.bus.cachebus.CacheBus
-
+import trinity.bus.cachebus.{CacheBus, CacheBusBase, CacheBusToBase}
 import trinity.core.decode.Decoder
 import trinity.core.decode.isa.InstType
 import trinity.core.execute.Executor
 import trinity.core.frontend.{Fetcher, ICacheExtra}
 import trinity.core.memory.MemoryOperator
 import trinity.core.writeback.WriteBack
-
 import trinity.util.{PipelineStage, TrinityModule}
 
 class CoreIO extends Bundle {
-  val icache = CacheBus(new ICacheExtra)
-  val dcache = CacheBus(new ControlFlowBundle)
+  val icache = CacheBusBase()
+  val dcache = CacheBusBase()
 }
 
 class Core extends TrinityModule {
@@ -31,7 +29,13 @@ class Core extends TrinityModule {
   val memoryOperator = Module(new MemoryOperator)
   val writeBack = Module(new WriteBack)
 
-  fetcher.io.cache <> io.icache
+  val iCacheConverter = Module(new CacheBusToBase(new ICacheExtra))
+  val dCacheConverter = Module(new CacheBusToBase(new ControlFlowBundle))
+
+  iCacheConverter.io.base <> io.icache
+  dCacheConverter.io.base <> io.dcache
+
+  fetcher.io.cache <> iCacheConverter.io.full
   fetcher.io.instruction <> decoder.io.in
   fetcher.io.exceptionRedirection.valid := false.B
   fetcher.io.exceptionRedirection.bits := DontCare
@@ -56,7 +60,7 @@ class Core extends TrinityModule {
   regExToMem.io.out <> memoryOperator.io.in
 
   memoryOperator.io.flush := false.B
-  memoryOperator.extra.lsuIO.cache <> io.dcache
+  memoryOperator.extra.lsuIO.cache <> dCacheConverter.io.full
   memoryOperator.io.out <> writeBack.io.in
 
   writeBack.io.write <> registerFile.io.write
