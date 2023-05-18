@@ -2,12 +2,15 @@ package trinity.core
 
 import chisel3._
 import chisel3.util._
+import trinity.bus.cachebus.CacheBus
+
 import trinity.core.decode.Decoder
 import trinity.core.decode.isa.InstType
 import trinity.core.execute.Executor
 import trinity.core.frontend.{Fetcher, ICacheExtra}
 import trinity.core.memory.MemoryOperator
 import trinity.core.writeback.WriteBack
+
 import trinity.util.{PipelineStage, TrinityModule}
 
 class CoreIO extends Bundle {

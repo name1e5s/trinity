@@ -19,7 +19,7 @@ class FetcherTest extends AnyFreeSpec with ChiselScalatestTester {
     dut.io.cache.resp.bits.extra.poke(extra)
 
     for (i <- 0 to 10) {
-      dut.io.cache.req.bits.addr.expect(0x8000_0000L + 4L * i)
+      dut.io.cache.req.bits.base.addr.expect(0x8000_0000L + 4L * i)
       dut.clock.step(1)
     }
 
@@ -28,6 +28,6 @@ class FetcherTest extends AnyFreeSpec with ChiselScalatestTester {
     dut.clock.step(1)
 
     dut.io.mispredictRedirection.valid.poke(false)
-    dut.io.cache.req.bits.addr.expect(0x8000_1000L)
+    dut.io.cache.req.bits.base.addr.expect(0x8000_1000L)
   }
 }

@@ -1,7 +1,9 @@
 package trinity.core.execute.fn
 
 import chisel3._
-import trinity.core.CacheBusRw
+
+import trinity.bus.cachebus.CacheBusRw
+
 import trinity.core.Constants._
 import trinity.core.execute.fn.FuncOpConversions._
 

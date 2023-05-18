@@ -2,6 +2,7 @@ package trinity.core.memory.mfn
 
 import chisel3._
 import chisel3.util._
+import trinity.bus.cachebus.{CacheBus, CacheBusSize}
 import trinity.core._
 import trinity.core.execute.fn._
 import trinity.core.Constants._
@@ -35,10 +36,10 @@ class Lsu extends MfnModule {
   val rw = LsuOp.rw(op)
   val size = LsuOp.size(op)
 
-  req.rw := rw
-  req.size := size
-  req.addr := info.addr
-  req.wmask := MuxLookup(size, 0.U)(
+  req.base.rw := rw
+  req.base.size := size
+  req.base.addr := info.addr
+  req.base.wmask := MuxLookup(size, 0.U)(
     List(
       CacheBusSize.B -> 1.U,
       CacheBusSize.H -> 3.U,
@@ -46,7 +47,7 @@ class Lsu extends MfnModule {
       CacheBusSize.D -> 255.U
     )
   ) << info.addr(2, 0)
-  req.wdata := MuxLookup(size, 0.U)(
+  req.base.wdata := MuxLookup(size, 0.U)(
     List(
       CacheBusSize.B -> Fill(8, wdata(7, 0)),
       CacheBusSize.H -> Fill(4, wdata(15, 0)),
@@ -57,7 +58,7 @@ class Lsu extends MfnModule {
 
   val rOp = cache.resp.bits.extra.microOp.fnOp
   val raddr = cache.resp.bits.extra.addressInfo.addr
-  val rawData = cache.resp.bits.rdata
+  val rawData = cache.resp.bits.base.rdata
   val rdata = MuxLookup(raddr(2, 0), 0.U) {
     (0 until 8) map { p =>
       p.U -> rawData(63, p * 8)

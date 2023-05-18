@@ -2,15 +2,10 @@ package trinity.core.frontend
 
 import chisel3._
 import chisel3.util._
-import trinity.core.{
-  CacheBus,
-  CacheBusRw,
-  CacheBusSize,
-  ControlFlowBundle,
-  InstructionBundle
-}
-import trinity.util._
+import trinity.bus.cachebus.{CacheBus, CacheBusRw, CacheBusSize}
 import trinity.core.Constants._
+import trinity.core.{ControlFlowBundle, InstructionBundle}
+import trinity.util._
 
 class ICacheExtra extends Bundle {
   val pc = UInt(xLen.W)
@@ -71,11 +66,11 @@ class Fetcher extends TrinityModule {
 
   // to bus
   io.cache.req.valid := io.instruction.ready
-  io.cache.req.bits.rw := CacheBusRw.R
-  io.cache.req.bits.addr := Cat(pc(xLen - 1, 2), 0.U(2.W))
-  io.cache.req.bits.size := CacheBusSize.W
-  io.cache.req.bits.wdata := 0.U
-  io.cache.req.bits.wmask := 0.U
+  io.cache.req.bits.base.rw := CacheBusRw.R
+  io.cache.req.bits.base.addr := Cat(pc(xLen - 1, 2), 0.U(2.W))
+  io.cache.req.bits.base.size := CacheBusSize.W
+  io.cache.req.bits.base.wdata := 0.U
+  io.cache.req.bits.base.wmask := 0.U
   val extra = io.cache.req.bits.extra
   extra.pc := pc
   extra.nextPc := nextPc
@@ -85,7 +80,7 @@ class Fetcher extends TrinityModule {
   io.instruction.bits := DontCare
 
   val instructionBundle = io.instruction.bits.instruction
-  instructionBundle.instruction := io.cache.resp.bits.rdata
+  instructionBundle.instruction := io.cache.resp.bits.base.rdata
   instructionBundle.pc := io.cache.resp.bits.extra.pc
   instructionBundle.predictedNextPc := io.cache.resp.bits.extra.nextPc
 
