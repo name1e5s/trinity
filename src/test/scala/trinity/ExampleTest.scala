@@ -6,6 +6,7 @@ import chisel3.util._
 import trinity.util._
 import chiseltest._
 import org.scalatest.freespec.AnyFreeSpec
+import systolic.core.{ProcessingElement, SystolicArray}
 import trinity.bus.cachebus.CacheBusToBase
 import trinity.core.decode.Decoder
 import trinity.core.execute.Executor
@@ -69,7 +70,7 @@ object ViewVerilog {
     (new chisel3.stage.ChiselStage).execute(
       Array("-X", "verilog"),
       Seq(
-        ChiselGeneratorAnnotation(() => new Core)
+        ChiselGeneratorAnnotation(() => new SystolicArray)
       )
     )
   }
