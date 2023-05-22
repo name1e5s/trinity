@@ -21,7 +21,7 @@ import trinity.core.execute.fn.{Agu, Alu, AluOp, Bru, BruOp}
 import trinity.core.frontend.Fetcher
 import trinity.core.memory.MemoryOperator
 import trinity.core.memory.mfn.{Dummy, Lsu}
-import trinity.sim.SimRam
+import trinity.sim.{SimCore, SimRam}
 
 class ExampleModule extends TrinityModule {
   val io = IO(new Bundle {
@@ -71,7 +71,7 @@ object ViewVerilog {
     (new chisel3.stage.ChiselStage).execute(
       Array("-X", "verilog"),
       Seq(
-        ChiselGeneratorAnnotation(() => new SimRam)
+        ChiselGeneratorAnnotation(() => new SimCore)
       )
     )
   }
