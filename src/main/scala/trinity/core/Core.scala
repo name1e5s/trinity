@@ -51,7 +51,7 @@ class Core extends TrinityModule {
     feedBack.bits := register.bits
   }
 
-  regDeToEx.io.flush := executor.io.redirect.valid
+  regDeToEx.io.flush := false.B
   regDeToEx.io.out <> executor.io.in
 
   executor.io.out <> regExToMem.io.in

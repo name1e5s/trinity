@@ -20,6 +20,7 @@ object BruOp {
 }
 
 class BruIO extends Bundle {
+  val valid = Input(Bool())
   val isBranch = Input(Bool())
   val pc = Input(UInt(xLen.W))
 
@@ -66,14 +67,16 @@ class Bru extends FnModule {
 
   val realNextPc = Mux(shouldJump, jumpPc, sequencePc)
   extra.redirect.bits := realNextPc
-  extra.redirect.valid := realNextPc =/= extra.nextPc
+  extra.redirect.valid := realNextPc =/= extra.nextPc && extra.valid
 
   log(
-    "pc: %x, op: %d, src: %x %x, jump: %d",
+    "pc: %x, op: %d, src: %x %x, jump: %d redirect: %d %x",
     extra.pc,
     io.op,
     src1,
     src2,
-    shouldJump
+    shouldJump,
+    extra.redirect.valid,
+    extra.redirect.bits
   )
 }

@@ -39,6 +39,6 @@ int main(int argc, char **argv) {
     }
     s.bus_init(argv[1]);
     s.reset();
-    s.step(1000);
+    s.step(50);
     return 0;
 }

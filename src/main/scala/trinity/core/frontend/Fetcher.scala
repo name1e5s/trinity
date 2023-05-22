@@ -35,6 +35,8 @@ class Fetcher extends TrinityModule {
     io.mispredictRedirection
   )
 
+  log(p"${io.exceptionRedirection} ${io.mispredictRedirection}")
+
   // pc info
   val pc = RegInit(pcInitVector.U(xLen.W))
   val pcChange = redirection.valid || io.cache.req.fire
@@ -76,8 +78,12 @@ class Fetcher extends TrinityModule {
   extra.nextPc := nextPc
   extra.epoch := epoch
 
+  log(p"${io.cache.req}")
+
   io.cache.resp.ready := io.instruction.ready || redirection.valid
   io.instruction.bits := DontCare
+
+  log(p"${io.instruction}")
 
   val instructionBundle = io.instruction.bits.instruction
   instructionBundle.instruction := io.cache.resp.bits.base.rdata

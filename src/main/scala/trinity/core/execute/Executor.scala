@@ -29,6 +29,7 @@ class Executor extends TrinityModule {
   val out = io.out.bits
 
   agu.extra.immediate := in.immediate
+  bru.extra.valid := io.in.valid
   bru.extra.pc := in.instruction.pc
   bru.extra.offset := in.immediate
   bru.extra.nextPc := in.instruction.predictedNextPc
@@ -62,5 +63,11 @@ class Executor extends TrinityModule {
   io.bypass.data := result.bits
   io.bypass.valid := io.in.valid && result.valid && InstType.writeGpr(
     in.microOp.fnType
+  )
+  log(
+    "valid: %d pc: %x ins: %x",
+    io.in.valid,
+    in.instruction.pc,
+    in.instruction.instruction
   )
 }

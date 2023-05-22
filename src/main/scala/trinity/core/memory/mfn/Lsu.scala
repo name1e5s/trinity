@@ -77,4 +77,7 @@ class Lsu extends MfnModule {
     }
   }
   out.bits.rd.data := regData
+
+  log(p"req: ${extra.cache.req}")
+  log(p"resp: ${extra.cache.resp}")
 }

@@ -28,6 +28,17 @@ void Simulator::step(uint64_t cycles) {
     return;
 }
 
+uint64_t real_wdata(uint64_t wdata, char wmask) {
+    uint64_t result = wdata;
+    for (int i = 0; i < 8; i ++) {
+        if (((wmask >> i) & 1) == 0) {
+            uint64_t mask = ~(0xffULL << (i << 3));
+            result &= mask;
+        }
+    }
+    return result;
+}
+
 void Simulator::check_bus(
     long long* resp_bits_rdata,
     unsigned char* resp_valid,
@@ -55,12 +66,14 @@ void Simulator::check_bus(
     if (write) {
         printf("Write: %llx %d %016llx %02x\n", req_bits_addr, req_bits_size, req_bits_wdata, req_bits_wmask);
         if ((req_bits_addr & 0xFFFFFFFFLL) == 0xFFFF0000LL) {
-            printf("%c", (char)req_bits_wdata);
+            uint64_t wdata = real_wdata(req_bits_wdata, req_bits_wmask);
+            fprintf(stderr, "%c", (char)wdata);
         } else if ((req_bits_addr & 0xFFFFFFFFLL) == 0xFFFF0010LL) {
-            if (req_bits_wdata != 0) {
-                printf("Test failed with error %lld.\n", req_bits_wdata);
+            uint64_t wdata = real_wdata(req_bits_wdata, req_bits_wmask);
+            if (wdata != 0) {
+                fprintf(stderr, "Test failed with error %lld.\n", wdata);
             } else {
-                puts("Test passed.");
+                fprintf(stderr, "Test passed.\n");
             }
             halt = true;
         } else {

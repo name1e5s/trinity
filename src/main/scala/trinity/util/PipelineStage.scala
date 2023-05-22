@@ -15,7 +15,7 @@ class PipelineStage[T <: Data](gen: => T) extends TrinityModule {
   val valid = RegInit(false.B)
   val data = Reg(gen)
 
-  io.in.ready := io.out.fire || io.flush
+  io.in.ready := !valid || io.out.fire || io.flush
   io.out.valid := valid || io.flush
   io.out.bits := data
 

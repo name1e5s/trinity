@@ -10,6 +10,8 @@ class InstructionBundle extends Bundle {
   val predictedNextPc = UInt(xLen.W)
 
   val instruction = UInt(instructionWidth.W)
+
+  override def toPrintable = p"pc ${Hexadecimal(pc)}"
 }
 
 class RegisterInfo extends Bundle {

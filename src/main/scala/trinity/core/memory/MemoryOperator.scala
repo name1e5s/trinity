@@ -49,4 +49,10 @@ class MemoryOperator extends TrinityModule {
       out.valid -> out.bits
     }
   )
+
+  log(p"${io.out}")
+
+  when(opUseMfu) {
+    log(p"${io.in.bits.instruction}")
+  }
 }

@@ -86,7 +86,7 @@ class Rv64ITable extends InstructionTable {
     AND -> List(InstType.R, FnType.ALU, AluOp.AND),
     SRA -> List(InstType.R, FnType.ALU, AluOp.SRA),
     AUIPC -> List(InstType.U, FnType.ALU, AluOp.ADD),
-    LUI -> List(InstType.U, FnType.ALU, AluOp.ADD),
+    LUI -> List(InstType.U, FnType.ALU, AluOp.LUI),
     JAL -> List(InstType.J, FnType.BRU, BruOp.J),
     JALR -> List(InstType.I, FnType.BRU, BruOp.JR),
     BEQ -> List(InstType.B, FnType.BRU, BruOp.EQ),

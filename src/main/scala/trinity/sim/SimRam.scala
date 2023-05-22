@@ -5,6 +5,7 @@ import chisel3.util._
 import chisel3.reflect.DataMirror
 import chisel3.experimental.{ExtModule, UnlocatableSourceInfo}
 import trinity.bus.cachebus.{CacheBusBase, CacheBusRespBase}
+import trinity.util.TrinityModule
 
 class SimRamIO extends Bundle {
   val icache = Flipped(CacheBusBase())
@@ -151,7 +152,7 @@ class SimRamInner extends ExtModule with HasExtModuleInline {
   scala.reflect.io.File(s"$moduleName.h").writeAll(cSource)
 }
 
-class SimRam extends Module {
+class SimRam extends TrinityModule {
   val io = IO(new SimRamIO)
 
   val inner = Module(new SimRamInner)
@@ -160,10 +161,15 @@ class SimRam extends Module {
 
   io <> inner.io
 
-  val cachedICacheRespValid = RegInit(false.B)
+  val cachedICacheRespValid = Reg(Bool())
   val cachedICacheResp = Reg(CacheBusRespBase())
-  val cachedDCacheRespValid = RegInit(false.B)
+  val cachedDCacheRespValid = Reg(Bool())
   val cachedDCacheResp = Reg(CacheBusRespBase())
+
+  when(reset.asBool) {
+    cachedICacheRespValid := false.B
+    cachedDCacheRespValid := false.B
+  }
 
   io.icache.req.ready := !(cachedICacheRespValid || inner.io.icache.resp.valid) || io.icache.resp.ready
   io.dcache.req.ready := !(cachedDCacheRespValid || inner.io.dcache.resp.valid) || io.dcache.resp.ready
@@ -171,29 +177,41 @@ class SimRam extends Module {
   inner.io.icache.req.valid := io.icache.req.fire
   inner.io.dcache.req.valid := io.dcache.req.fire
 
-  io.icache.resp.valid := cachedICacheRespValid
-  io.icache.resp.bits := cachedICacheResp
+  io.icache.resp.valid := inner.io.icache.resp.valid || cachedICacheRespValid
+  io.icache.resp.bits := Mux(
+    inner.io.icache.resp.valid,
+    inner.io.icache.resp.bits,
+    cachedICacheResp
+  )
+
   when(inner.io.icache.resp.valid) {
-    io.icache.resp.valid := true.B
-    io.icache.resp.bits := inner.io.icache.resp.bits
     cachedICacheResp := inner.io.icache.resp.bits
-    cachedICacheRespValid := !io.icache.resp.fire
-  } otherwise {
-    when(io.icache.resp.fire) {
-      cachedICacheRespValid := false.B
-    }
   }
 
-  io.dcache.resp.valid := cachedDCacheRespValid
-  io.dcache.resp.bits := cachedDCacheResp
+  val nextCachedICacheRespValid =
+    (cachedICacheRespValid || inner.io.icache.resp.valid) && !inner.io.icache.resp.ready
+  cachedICacheRespValid := nextCachedICacheRespValid
+
+  log(
+    p"icache ${io.icache.resp} $cachedICacheRespValid ${io.icache.resp.ready} $nextCachedICacheRespValid"
+  )
+
+  io.dcache.resp.valid := inner.io.dcache.resp.valid || cachedDCacheRespValid
+  io.dcache.resp.bits := Mux(
+    inner.io.dcache.resp.valid,
+    inner.io.dcache.resp.bits,
+    cachedDCacheResp
+  )
+
   when(inner.io.dcache.resp.valid) {
-    io.dcache.resp.valid := true.B
-    io.dcache.resp.bits := inner.io.dcache.resp.bits
     cachedDCacheResp := inner.io.dcache.resp.bits
-    cachedDCacheRespValid := true.B
-  } otherwise {
-    when(io.dcache.resp.fire) {
-      cachedDCacheRespValid := false.B
-    }
   }
+
+  val nextCachedDCacheRespValid =
+    (cachedDCacheRespValid || inner.io.dcache.resp.valid) && !inner.io.dcache.resp.ready
+  cachedDCacheRespValid := nextCachedDCacheRespValid
+
+  log(
+    p"dcache ${io.dcache.resp} $cachedDCacheRespValid ${io.dcache.resp.ready} $nextCachedICacheRespValid"
+  )
 }

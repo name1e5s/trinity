@@ -2,13 +2,14 @@ package trinity.bus.cachebus
 
 import chisel3._
 import chisel3.util._
+import trinity.util.TrinityModule
 
 class CacheBusToBaseIO[T <: Bundle](gen: => T) extends Bundle {
   val full = Flipped(CacheBus(gen))
   val base = CacheBusBase()
 }
 
-class CacheBusToBase[T <: Bundle](gen: => T) extends Module {
+class CacheBusToBase[T <: Bundle](gen: => T) extends TrinityModule {
   val io = IO(new CacheBusToBaseIO(gen))
 
   import io.{full, base}
@@ -17,6 +18,7 @@ class CacheBusToBase[T <: Bundle](gen: => T) extends Module {
   val bufValid = RegInit(false.B)
 
   val okToFireReq = !bufValid || (bufValid && full.resp.fire)
+
   full.req.ready := base.req.ready && okToFireReq
   base.req.valid := full.req.valid && okToFireReq
   base.req.bits := full.req.bits.base
