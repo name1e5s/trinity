@@ -71,7 +71,12 @@ void Simulator::check_bus(
         } else if ((req_bits_addr & 0xFFFFFFFFLL) == 0xFFFF0010LL) {
             uint64_t wdata = real_wdata(req_bits_wdata, req_bits_wmask);
             if (wdata != 0) {
-                fprintf(stderr, "Test failed with error %lld.\n", wdata);
+                fprintf(stderr, "Test failed with error 0x%llx.\n", wdata);
+                for (int i = 0; i < 8; i ++) {
+                    int v = 8 - (i + 1);
+                    fprintf(stderr, "%llu ", (wdata >> (v << 3)) & 0xFFULL);
+                }
+                fprintf(stderr, "\n");
             } else {
                 fprintf(stderr, "Test passed.\n");
             }

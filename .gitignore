@@ -352,4 +352,6 @@ project/project
 /*.f
 /*.h
 
+a.out
+
 Cargo.lock
