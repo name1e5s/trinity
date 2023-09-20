@@ -108,7 +108,7 @@ object IsaCommonDecoder {
         xLen
       ),
       ohType(InstType.U) -> SignExtension(inst(31, 12) ## 0.U(12.W), xLen),
-      ohType(InstType.J) -> SignExtension(inst(31, 20), xLen)
+      ohType(InstType.J) -> SignExtension(inst(31) ## inst(19, 12) ## inst(20) ## inst(30, 21) ## false.B, xLen)
     )
     val immediate = Mux1H(immediateTable)
     val result = Wire(new CommonInfo)

@@ -53,8 +53,8 @@
 #define RVTEST_CODE_BEGIN(count, name)                                  \
         .section .text.init;                                            \
         .align  6;                                                      \
-        .globl test_ ## name;                                           \
-test_ ## name:                                                          \
+        .globl test_ ## count ## _ ## name;                             \
+test_ ## count ## _ ## name:                                            \
         INIT_XREG                                                       \
         li x30, count
 

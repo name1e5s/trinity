@@ -7,9 +7,36 @@ CFLAGS 	:= 	-mcmodel=medany -static -std=gnu99 -O2 \
 
 OBJDUMP := 	riscv64-unknown-elf-objdump
 
-SRC 	:=	main.S \
-			isa/add.o \
-			isa/addi.o
+SRC 	:=	main.S 			\
+			isa/1_add.o 	\
+			isa/2_addi.o 	\
+			isa/3_addiw.o 	\
+			isa/4_addw.o 	\
+			isa/5_and.o 	\
+			isa/6_andi.o 	\
+			isa/7_or.o 		\
+			isa/8_ori.o 	\
+			isa/9_sll.o 	\
+			isa/10_slli.o 	\
+			isa/11_sllw.o 	\
+			isa/12_slliw.o  \
+			isa/13_slt.o 	\
+			isa/14_slti.o 	\
+			isa/15_sltiu.o 	\
+			isa/16_sltu.o 	\
+			isa/17_sra.o 	\
+			isa/18_srai.o 	\
+			isa/19_sraiw.o 	\
+			isa/20_sraw.o 	\
+			isa/21_srl.o 	\
+			isa/22_srli.o 	\
+			isa/23_srliw.o 	\
+			isa/24_srlw.o 	\
+			isa/25_sub.o 	\
+			isa/26_subw.o	\
+			isa/27_xor.o 	\
+			isa/28_xori.o	\
+			isa/29_lui.o
 
 TARGET_DIR 	:= target
 

@@ -30,10 +30,10 @@ public:
     );
 
     std::shared_ptr<VSimCore> c;
+    bool halt;
 private:
     uint64_t cycle;
     SimMemory memory;
-    bool halt;
 };
 
 
