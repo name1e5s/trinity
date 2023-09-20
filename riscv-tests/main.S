@@ -8,6 +8,7 @@ _start:
     li  x30, 0
     li  x31, 0
     jal x31, test_add
+    jal x31, test_addi
     lui a5, 0xffff
     sll a5, a5, 4
     sd x0, 16(a5)
