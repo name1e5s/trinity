@@ -58,7 +58,7 @@ void Simulator::check_bus(
     bool read = req_valid == 1 && req_bits_rw == 0;
     if (read) {
         auto rdata = memory.read(req_bits_addr, req_bits_size);
-        printf("Reading %016llx <- %016llx\n", req_bits_addr, rdata);
+        printf("Reading %016llx(%d) <- %016llx\n", req_bits_addr, req_bits_size, rdata);
         *resp_bits_rdata = rdata;
     }
 

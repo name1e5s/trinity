@@ -20,8 +20,8 @@ uint64_t SimMemory::read(uint64_t addr, int size) {
     auto offset = addr_to_offset(addr);
     med_mem result;
     result.data_double = 0;
-    for (int i = 0; i < size_array[size]; i ++) {
-        result.data_bytes[i] = memory[offset + i];
+    for (int i = 0; i < 8; i ++) {
+        result.data_bytes[i] = memory[offset + i % size_array[size]];
     }
     return result.data_double;
 }

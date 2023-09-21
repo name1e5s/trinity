@@ -44,7 +44,19 @@ SRC 	:=	main.S 			\
 			isa/34_bltu.o	\
 			isa/35_bne.o	\
 			isa/36_jal.o	\
-			isa/37_jalr.o
+			isa/37_jalr.o	\
+			isa/38_lb.o		\
+			isa/39_lbu.o	\
+			isa/40_lh.o		\
+			isa/41_lhu.o	\
+			isa/42_lw.o		\
+			isa/43_lwu.o	\
+			isa/44_ld.o		\
+			isa/45_sb.o		\
+			isa/46_sh.o		\
+			isa/47_sw.o		\
+			isa/48_sd.o		\
+			isa/49_auipc.o
 
 TARGET_DIR 	:= target
 

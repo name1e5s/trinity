@@ -44,6 +44,18 @@ _start:
     jal x31, test_35_bne
     jal x31, test_36_jal
     jal x31, test_37_jalr
+    jal x31, test_38_lb
+    jal x31, test_39_lbu
+    jal x31, test_40_lh
+    jal x31, test_41_lhu
+    jal x31, test_42_lw
+    jal x31, test_43_lwu
+    jal x31, test_44_ld
+    jal x31, test_45_sb
+    jal x31, test_46_sh
+    jal x31, test_47_sw
+    jal x31, test_48_sd
+    jal x31, test_49_auipc
     lui a5, 0xffff
     sll a5, a5, 4
     sd x0, 16(a5)
