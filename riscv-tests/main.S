@@ -7,6 +7,7 @@ _start:
     INIT_XREG
     li  x30, 0
     li  x31, 0
+    jal x31, test_0_simple
     jal x31, test_1_add
     jal x31, test_2_addi
     jal x31, test_3_addiw

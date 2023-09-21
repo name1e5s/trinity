@@ -8,6 +8,7 @@ CFLAGS 	:= 	-mcmodel=medany -static -std=gnu99 -O2 \
 OBJDUMP := 	riscv64-unknown-elf-objdump
 
 SRC 	:=	main.S 			\
+			isa/0_simple.o 	\
 			isa/1_add.o 	\
 			isa/2_addi.o 	\
 			isa/3_addiw.o 	\
