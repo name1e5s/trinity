@@ -36,6 +36,14 @@ _start:
     jal x31, test_27_xor
     jal x31, test_28_xori
     jal x31, test_29_lui
+    jal x31, test_30_beq
+    jal x31, test_31_bge
+    jal x31, test_32_bgeu
+    jal x31, test_33_blt
+    jal x31, test_34_bltu
+    jal x31, test_35_bne
+    jal x31, test_36_jal
+    jal x31, test_37_jalr
     lui a5, 0xffff
     sll a5, a5, 4
     sd x0, 16(a5)

@@ -19,4 +19,6 @@ class WriteBack extends TrinityModule {
   io.write.valid := io.in.valid && InstType.writeGpr(in.microOp.instType)
   io.write.addr := in.rd.addr
   io.write.data := in.rd.data
+
+  log("valid: %d, addr: %d data: %x", io.write.valid, in.rd.addr, in.rd.data)
 }

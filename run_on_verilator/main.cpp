@@ -39,7 +39,7 @@ int main(int argc, char **argv) {
     }
     s.bus_init(argv[1]);
     s.reset();
-    s.step(15000);
+    s.step(30000);
     if (!s.halt) {
         return 1;
     }

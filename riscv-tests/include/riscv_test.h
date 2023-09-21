@@ -75,11 +75,10 @@ test_ ## count ## _ ## name:                                            \
 
 #define TESTNUM gp
 #define RVTEST_FAIL                                                     \
-        lui a5, 0xffff;                                                 \
-        sll a5, a5, 4;                                                  \
+        li a5, 0xffff0010;                                              \
         sll x30, x30, 8;                                                \
         or TESTNUM, TESTNUM, x30;                                       \
-        sd  TESTNUM, 16(a5);                                            \
+        sd  TESTNUM, 0(a5);                                             \
         jr x31
 
 //-----------------------------------------------------------------------

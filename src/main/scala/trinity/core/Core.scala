@@ -72,7 +72,7 @@ class Core extends TrinityModule {
         val flow = p.bits
         val microOp = flow.microOp
 
-        bypass.valid := p.valid && InstType.writeGpr(microOp.fnType)
+        bypass.valid := p.valid && InstType.writeGpr(microOp.instType)
         bypass.addr := flow.rd.addr
         bypass.data := flow.rd.data
         bypass

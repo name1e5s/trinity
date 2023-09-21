@@ -62,7 +62,7 @@ class Executor extends TrinityModule {
   io.bypass.addr := in.rd.addr
   io.bypass.data := result.bits
   io.bypass.valid := io.in.valid && result.valid && InstType.writeGpr(
-    in.microOp.fnType
+    in.microOp.instType
   )
   log(
     "valid: %d pc: %x ins: %x",

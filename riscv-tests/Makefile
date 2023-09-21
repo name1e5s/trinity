@@ -36,7 +36,15 @@ SRC 	:=	main.S 			\
 			isa/26_subw.o	\
 			isa/27_xor.o 	\
 			isa/28_xori.o	\
-			isa/29_lui.o
+			isa/29_lui.o	\
+			isa/30_beq.o	\
+			isa/31_bge.o	\
+			isa/32_bgeu.o	\
+			isa/33_blt.o	\
+			isa/34_bltu.o	\
+			isa/35_bne.o	\
+			isa/36_jal.o	\
+			isa/37_jalr.o
 
 TARGET_DIR 	:= target
 

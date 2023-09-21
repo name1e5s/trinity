@@ -55,4 +55,6 @@ class Agu extends FnModule {
   io.result.valid := false.B
   extra.info.addr := io.src1 + extra.immediate
   extra.info.data := io.src2
+
+  log("base: %x offset: %d", io.src1, extra.immediate)
 }

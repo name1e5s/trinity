@@ -21,7 +21,7 @@ object InstType {
 
   def apply() = UInt(width.W)
 
-  def writeGpr(value: UInt) = value =/= S || value =/= B || value =/= X
+  def writeGpr(value: UInt) = value =/= S && value =/= B && value =/= X
 }
 
 object SrcType {
